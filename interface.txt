@@ -1,0 +1,684 @@
+signIn 로그인
+
+- request
+{
+    *email : String,
+    *password : String
+}
+
+- response 
+
+성공
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    token : "test...",
+    expiredDate : 123456
+}
+
+실패
+
+- 필수 정보 미입력
+
+- 로그인 실패
+Http Status - 401 (Unauthorized)
+{
+    code : "SF",
+    message : "Sign In Failed."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+회원가입 signUp
+
+- request
+{
+    *email : String,
+    *password : String,
+    *nickname : String,
+    *telNumber : String,
+    *address : String,
+    addressDetail : String
+}
+
+- response
+
+성공
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success."
+}
+
+실패
+
+- 이메일 형식 불일치 / 비밀번호 8자리 이하 / 전화번호 형식 불일치 / 필수 정보 미입력
+
+- 중복 이메일
+Http Status - 400 (Bad Request)
+{
+    code : "EE",
+    message : "Existed Email."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+주간 상위3 게시물 리스트
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    top3List : boardListItem[]
+}
+
+boardListItem
+{
+    title : String,
+    content : String,
+    boardTitleImage : String,
+    favoriteCount : Int,
+    commentCount : Int,
+    viewCount : Int,
+    writeDatetime : String,
+    writerNickname : String,
+    writerProfileImage : String,
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+최신 게시물 리스트 curretList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    currentList : boardListItem[]
+}
+
+boardListItem
+{
+    title : String,
+    content : String,
+    boardTitleImage : String,
+    favoriteCount : Int,
+    commentCount : Int,
+    viewCount : Int,
+    writeDatetime : String,
+    writerNickname : String,
+    writerProfileImage : String,
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+
+인기 검색어 리스트 popularWordList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    popularWordList : boardListItem[]
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+
+검색 게시물 리스트 SearchList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    searchList : boardListItem[]
+}
+
+boardListItem
+{
+    title : String,
+    content : String,
+    boardTitleImage : String,
+    favoriteCount : Int,
+    commentCount : Int,
+    viewCount : Int,
+    writeDatetime : String,
+    writerNickname : String,
+    writerProfileImage : String
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+관련 검색어 리스트 relativWordList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    relativWordList : boardListItem[]
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+===================================
+게시물 상세 boardDetail
+
+-response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    boardNumber : Int,
+    title : String,
+    content : String,
+    boardTitleImage : String,
+    writerEmail : String,
+    writeDatetime : String,
+    writerNickname : String,
+    writerProfileImage : String
+}
+
+실패
+
+- 존재하지 않는 게시물
+Http Status - 400 (Bad Request)
+{
+    code : "NB",
+    message : "No Existed Board Number."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+좋아요 리스트 favoriteList
+
+-response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    favoriteList : FavoriteListItem[]
+}
+
+FavoriteListItem{
+    email : String,
+    nickname : String,
+    profileImage : String
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+좋아요 기능 putFavorite
+
+- request
+{
+    boardNumber : Int,
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+댓글 리스트 commentList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    commentList : commentListItem[]
+}
+
+commentListItem{
+    email : String,
+    nickname : String,
+    writeDatetime : String,
+    content : String
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+댓글 쓰기 postComment
+
+- request
+{
+    *content : String,
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success."
+}
+
+실패
+
+- 존재하지 않는 게시물
+Http Status - 400 (Bad Request)
+{
+    code : "NB",
+    message : "No Existed Board."
+}
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+게시물 삭제 boardDelete
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success."
+}
+
+실패
+
+- 존재하지 않는 게시물
+Http Status - 400 (Bad Request)
+{
+    code : "NB",
+    message : "No Existed Board."
+}
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 권한 없음
+Http Status - 403 (Forbidden)
+{
+    code : "NP",
+    message : "No Permission."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+게시물 수정 boardUpdate
+
+- request
+{
+    *title : String,
+    *content : String,
+    boardImageList : String[]
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success."
+}
+
+실패
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 권한 없음
+Http Status - 403 (Forbidden)
+{
+    code : "NP",
+    message : "No Permission."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+===================================
+게시물 쓰기 boardWrite
+
+- request
+{
+    *title : String,
+    *content : String,
+    boardImageList : String[]
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success."
+}
+
+실패
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 권한 없음
+Http Status - 403 (Forbidden)
+{
+    code : "NP",
+    message : "No Permission."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+유저 정보 getUser
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    email : String,
+    nickname : String,
+    profileImage : String
+}
+
+실패
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+===================================
+특정 유저 게시물 리스트 userBoardList
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+    boardList : boardListItem[]
+}
+
+boardListItem
+{
+    title : String,
+    content : String,
+    boardTitleImage : String,
+    favoriteCount : Int,
+    commentCount : Int,
+    viewCount : Int,
+    writeDatetime : String,
+    writerNickname : String,
+    writerProfileImage : String
+}
+
+실패
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+===================================
+파일 업로드 fileUpload
+
+===================================
+파일 불러오기 getFile
+===================================
+닉네임 수정 patchNickname
+
+- request
+{
+    nickname : String
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+}
+
+실패
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+===================================
+프로필 수정 patchProfileImage
+
+- request
+{
+    profileImage : String
+}
+
+- response
+
+성공
+
+Http Status 200 (OK)
+{
+    code : "SU",
+    message : "Success.",
+}
+
+실패
+
+- 존재하지 않는 유저
+Http Status - 400 (Bad Request)
+{
+    code : "NU",
+    message : "No Existed User."
+}
+
+- 데이터베이스 에러
+Http Status - 500 (Internal Server Error)
+{
+    code : "DE",
+    message : "Database Error."
+}
+
+
+===========================
+
+200
+- 성공 : "SU" / "Success"
+
+400
+- 유효성 검증 실패 : "VF" / "Validation failed"
+- 중복된 이메일 : "DE" / "Duplicate email"
+- 중복된 전화번호 : "DT" / "Duplicate tel number"
+- 중복된 닉네임 : "DN" / "Duplicate nickname"
+- 존재하지 않는 유저 : "NU" / "This user does not exist."
+- 존재하지 않는 게시물 : "NB" / "This board does not exist."
+
+401
+- 로그인 실패 : "SF" / "Login information mismatch."
+- 인증 실패 : "AF" / "Authorization failed."
+
+403
+- 권한 없음 : "NP" / "Do not have permission."
+
+500
+- 데이터베이스 에러 : "DBE" / "Database error."

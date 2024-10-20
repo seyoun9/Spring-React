@@ -24,7 +24,6 @@ export default function BoardItem({ boardListItem }: Props){
         // navigator(boardNumber);
     }
 
-
 //      Render: Board List Item 컴포넌트 렌더링
     return (
 

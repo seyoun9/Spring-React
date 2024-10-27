@@ -38,7 +38,8 @@ public class WebSecurityConfig {
         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(CsrfConfigurer::disable)
         .httpBasic(HttpBasicConfigurer::disable)
-        .sessionManagement(sessionManagent -> sessionManagent.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .sessionManagement(sessionManagent -> sessionManagent
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(request -> request
             .requestMatchers("/","/api/v1/auth/**", "/api/v1/search/**", "/file/**").permitAll()
             .requestMatchers(HttpMethod.GET,"/api/v1/user/**", "/api/v1/board/**").permitAll()
@@ -50,20 +51,6 @@ public class WebSecurityConfig {
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
-    }
-
-    class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint{
-
-        @Override
-        public void commence(HttpServletRequest request, HttpServletResponse response,
-                AuthenticationException authException) throws IOException, ServletException {
-                
-            response.setContentType("application/json");
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("{\"code\": \"NP\", \"message\": \"Do not have permission.\"}");
-        }
-        
-        
     }
 
     @Bean
@@ -79,4 +66,17 @@ public class WebSecurityConfig {
 
         return source;
     }
+}
+
+class FailedAuthenticationEntryPoint implements AuthenticationEntryPoint{
+        
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException authException) throws IOException, ServletException {
+            
+        response.setContentType("application/json");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.getWriter().write("{\"code\": \"NP\", \"message\": \"Do not have permission.\"}");
+    }
+    
 }

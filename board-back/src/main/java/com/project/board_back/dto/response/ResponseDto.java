@@ -13,9 +13,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ResponseDto {
 
-    @SuppressWarnings("FieldMayBeFinal")
     private String code;
-    @SuppressWarnings("FieldMayBeFinal")
+
     private String message;
     
     public static ResponseEntity<ResponseDto> databaseError() {

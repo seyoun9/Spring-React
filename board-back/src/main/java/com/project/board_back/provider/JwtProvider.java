@@ -28,7 +28,8 @@ public class JwtProvider {
         String jwt = Jwts.builder()
         .signWith(key, SignatureAlgorithm.HS256)
         .setSubject(email).setIssuedAt(new Date())
-        .setExpiration(expiredDate).compact();
+        .setExpiration(expiredDate)
+        .compact();
 
         return jwt;
     }
@@ -39,11 +40,13 @@ public class JwtProvider {
         Key key = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         
         try {
+
             claims = Jwts.parserBuilder()
             .setSigningKey(key)
             .build()
             .parseClaimsJws(jwt)
             .getBody();
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
